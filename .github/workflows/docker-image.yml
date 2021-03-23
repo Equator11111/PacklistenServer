@@ -26,4 +26,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: equator11111/githubtest:latest
+          tags: equator11111/packliste:latest
