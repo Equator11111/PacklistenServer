@@ -1,3 +1,5 @@
-void main(List<String> arguments) {
-  print('Hello world!');
+import 'package:packliste/server.dart';
+
+Future<void> main(List<String> args) async {
+  await Server().main(args);
 }
