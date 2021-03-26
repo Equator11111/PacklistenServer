@@ -14,7 +14,8 @@ class PacklisteCommService extends PacklisteCommServiceBase {
   Future<Status> createPackliste(
       grpc.ServiceCall call, Packliste request) async {
     // TODO: implement createPackliste
-    print('Creating Packliste');
+    print(request.name);
+    print(request.id);
     return Status(message: "Done", status: Status_Status.SUCCESS);
   }
 
