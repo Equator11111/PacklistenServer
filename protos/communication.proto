@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 service PacklisteComm {
-    rpc CreatePackliste (Packliste) returns (Empty) {}
+    rpc CreatePackliste (Packliste) returns (Packliste) {}
     rpc EditPackliste (Packliste) returns (Empty) {}
     rpc GetPackliste (Id) returns (Packliste) {}
     rpc DeletePackliste (Id) returns (Empty) {}
