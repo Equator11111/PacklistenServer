@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:packliste/src/generated/communication.pbgrpc.dart';
 import 'package:grpc/grpc.dart' as grpc;
 
 class Server {
   Future<void> main(List<String> args) async {
+    var file = File('config/config.json');
+    var contents = jsonDecode(await file.readAsString());
+
     final server = grpc.Server([PacklisteCommService()]);
-    await server.serve(port: 8080);
+    await server.serve(port: contents['port']);
     print('Server listening on port ${server.port}...');
   }
 }
