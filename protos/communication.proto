@@ -1,10 +1,10 @@
 syntax = "proto3";
 
 service PacklisteComm {
-    rpc CreatePackliste (Packliste) returns (Status) {}
-    rpc EditPackliste (Packliste) returns (Status) {}
+    rpc CreatePackliste (Packliste) returns (Empty) {}
+    rpc EditPackliste (Packliste) returns (Empty) {}
     rpc GetPackliste (Id) returns (Packliste) {}
-    rpc DeletePackliste (Id) returns (Status) {}
+    rpc DeletePackliste (Id) returns (Empty) {}
     rpc GetPacklisten (Empty) returns (stream Packliste) {}
 }
 
@@ -18,14 +18,4 @@ message Id {
 }
 
 message Empty {
-}
-
-message Status {
-    enum Status {
-        SUCCESS=0;
-        ID_NOT_FOUND=1;
-        ID_ALREADY_USED=2;
-    }
-    Status status = 1;
-    string message = 2;
 }

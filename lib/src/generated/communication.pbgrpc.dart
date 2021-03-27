@@ -14,22 +14,22 @@ import 'communication.pb.dart' as $0;
 export 'communication.pb.dart';
 
 class PacklisteCommClient extends $grpc.Client {
-  static final _$createPackliste = $grpc.ClientMethod<$0.Packliste, $0.Status>(
+  static final _$createPackliste = $grpc.ClientMethod<$0.Packliste, $0.Empty>(
       '/PacklisteComm/CreatePackliste',
       ($0.Packliste value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Status.fromBuffer(value));
-  static final _$editPackliste = $grpc.ClientMethod<$0.Packliste, $0.Status>(
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+  static final _$editPackliste = $grpc.ClientMethod<$0.Packliste, $0.Empty>(
       '/PacklisteComm/EditPackliste',
       ($0.Packliste value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Status.fromBuffer(value));
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$getPackliste = $grpc.ClientMethod<$0.Id, $0.Packliste>(
       '/PacklisteComm/GetPackliste',
       ($0.Id value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Packliste.fromBuffer(value));
-  static final _$deletePackliste = $grpc.ClientMethod<$0.Id, $0.Status>(
+  static final _$deletePackliste = $grpc.ClientMethod<$0.Id, $0.Empty>(
       '/PacklisteComm/DeletePackliste',
       ($0.Id value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Status.fromBuffer(value));
+      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
   static final _$getPacklisten = $grpc.ClientMethod<$0.Empty, $0.Packliste>(
       '/PacklisteComm/GetPacklisten',
       ($0.Empty value) => value.writeToBuffer(),
@@ -40,12 +40,12 @@ class PacklisteCommClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.Status> createPackliste($0.Packliste request,
+  $grpc.ResponseFuture<$0.Empty> createPackliste($0.Packliste request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createPackliste, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Status> editPackliste($0.Packliste request,
+  $grpc.ResponseFuture<$0.Empty> editPackliste($0.Packliste request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$editPackliste, request, options: options);
   }
@@ -55,7 +55,7 @@ class PacklisteCommClient extends $grpc.Client {
     return $createUnaryCall(_$getPackliste, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Status> deletePackliste($0.Id request,
+  $grpc.ResponseFuture<$0.Empty> deletePackliste($0.Id request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deletePackliste, request, options: options);
   }
@@ -72,20 +72,20 @@ abstract class PacklisteCommServiceBase extends $grpc.Service {
   $core.String get $name => 'PacklisteComm';
 
   PacklisteCommServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Packliste, $0.Status>(
+    $addMethod($grpc.ServiceMethod<$0.Packliste, $0.Empty>(
         'CreatePackliste',
         createPackliste_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.Packliste.fromBuffer(value),
-        ($0.Status value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Packliste, $0.Status>(
+        ($0.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Packliste, $0.Empty>(
         'EditPackliste',
         editPackliste_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.Packliste.fromBuffer(value),
-        ($0.Status value) => value.writeToBuffer()));
+        ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Id, $0.Packliste>(
         'GetPackliste',
         getPackliste_Pre,
@@ -93,13 +93,13 @@ abstract class PacklisteCommServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Id.fromBuffer(value),
         ($0.Packliste value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Id, $0.Status>(
+    $addMethod($grpc.ServiceMethod<$0.Id, $0.Empty>(
         'DeletePackliste',
         deletePackliste_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.Id.fromBuffer(value),
-        ($0.Status value) => value.writeToBuffer()));
+        ($0.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Empty, $0.Packliste>(
         'GetPacklisten',
         getPacklisten_Pre,
@@ -109,12 +109,12 @@ abstract class PacklisteCommServiceBase extends $grpc.Service {
         ($0.Packliste value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.Status> createPackliste_Pre(
+  $async.Future<$0.Empty> createPackliste_Pre(
       $grpc.ServiceCall call, $async.Future<$0.Packliste> request) async {
     return createPackliste(call, await request);
   }
 
-  $async.Future<$0.Status> editPackliste_Pre(
+  $async.Future<$0.Empty> editPackliste_Pre(
       $grpc.ServiceCall call, $async.Future<$0.Packliste> request) async {
     return editPackliste(call, await request);
   }
@@ -124,7 +124,7 @@ abstract class PacklisteCommServiceBase extends $grpc.Service {
     return getPackliste(call, await request);
   }
 
-  $async.Future<$0.Status> deletePackliste_Pre(
+  $async.Future<$0.Empty> deletePackliste_Pre(
       $grpc.ServiceCall call, $async.Future<$0.Id> request) async {
     return deletePackliste(call, await request);
   }
@@ -134,13 +134,13 @@ abstract class PacklisteCommServiceBase extends $grpc.Service {
     yield* getPacklisten(call, await request);
   }
 
-  $async.Future<$0.Status> createPackliste(
+  $async.Future<$0.Empty> createPackliste(
       $grpc.ServiceCall call, $0.Packliste request);
-  $async.Future<$0.Status> editPackliste(
+  $async.Future<$0.Empty> editPackliste(
       $grpc.ServiceCall call, $0.Packliste request);
   $async.Future<$0.Packliste> getPackliste(
       $grpc.ServiceCall call, $0.Id request);
-  $async.Future<$0.Status> deletePackliste(
+  $async.Future<$0.Empty> deletePackliste(
       $grpc.ServiceCall call, $0.Id request);
   $async.Stream<$0.Packliste> getPacklisten(
       $grpc.ServiceCall call, $0.Empty request);
