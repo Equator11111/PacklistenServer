@@ -29,10 +29,3 @@ const Id$json = const {
 
 /// Descriptor for `Id`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List idDescriptor = $convert.base64Decode('CgJJZBIOCgJpZBgBIAEoBVICaWQ=');
-@$core.Deprecated('Use emptyDescriptor instead')
-const Empty$json = const {
-  '1': 'Empty',
-};
-
-/// Descriptor for `Empty`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List emptyDescriptor = $convert.base64Decode('CgVFbXB0eQ==');

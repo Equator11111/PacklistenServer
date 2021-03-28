@@ -1,0 +1,27 @@
+syntax = "proto3";
+import "common.proto";
+
+service PacklisteSocket {
+    rpc GetSocket (Empty) returns (stream Packet) {}
+}
+
+enum PacketType {
+    PACKLISTE_CREATE = 0;
+    PACKLISTE_EDIT = 1;
+    PACKLISTE_DELETE = 2;
+
+    CATEGORY_CREATE = 3;
+    CATEGORY_EDIT = 4;
+    CATEGORY_DELETE = 5;
+    
+    ITEM_CREATE = 6;
+    ITEM_EDIT = 7;
+    ITEM_DELETE = 8;
+    ITEM_MOVE = 9;
+    
+    ITEM_PACK = 10;
+}
+message Packet {
+    PacketType type = 1;
+    int32 id = 2;
+}

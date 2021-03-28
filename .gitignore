@@ -10,3 +10,4 @@ doc/api/
 
 config/config.json
 mysql1/
+server.code-workspace
