@@ -20,6 +20,10 @@ enum PacketType {
     ITEM_MOVE = 9;
     
     ITEM_PACK = 10;
+
+    MEMBER_CREATE = 11;
+    MEMBER_EDIT = 12;
+    MEMBER_DELETE = 13;
 }
 message Packet {
     PacketType type = 1;

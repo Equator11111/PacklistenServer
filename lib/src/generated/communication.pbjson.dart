@@ -19,6 +19,19 @@ const Packliste$json = const {
 
 /// Descriptor for `Packliste`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List packlisteDescriptor = $convert.base64Decode('CglQYWNrbGlzdGUSDgoCaWQYASABKAVSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWU=');
+@$core.Deprecated('Use memberDescriptor instead')
+const Member$json = const {
+  '1': 'Member',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'pId', '3': 3, '4': 1, '5': 5, '10': 'pId'},
+    const {'1': 'everyone', '3': 4, '4': 1, '5': 8, '10': 'everyone'},
+  ],
+};
+
+/// Descriptor for `Member`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List memberDescriptor = $convert.base64Decode('CgZNZW1iZXISDgoCaWQYASABKAVSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEAoDcElkGAMgASgFUgNwSWQSGgoIZXZlcnlvbmUYBCABKAhSCGV2ZXJ5b25l');
 @$core.Deprecated('Use idDescriptor instead')
 const Id$json = const {
   '1': 'Id',

@@ -10,9 +10,24 @@ service PacklisteComm {
     rpc GetPacklisten (Empty) returns (stream Packliste) {}
 }
 
+service MemberComm {
+    rpc GetMember (Id) returns (Member);
+    rpc GetMembers (Id) returns (stream Member);
+    rpc CreateMember (Member) returns (Member) {}
+    rpc EditMember (Member) returns (Empty) {}
+    rpc DeleteMember (Id) returns (Empty);
+}
+
 message Packliste {
     int32 id = 1;
     string name = 2;   
+}
+
+message Member {
+    int32 id = 1;
+    string name = 2;
+    int32 pId = 3;
+    bool everyone = 4;
 }
 
 message Id {

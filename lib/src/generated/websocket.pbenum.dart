@@ -21,6 +21,9 @@ class PacketType extends $pb.ProtobufEnum {
   static const PacketType ITEM_DELETE = PacketType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_DELETE');
   static const PacketType ITEM_MOVE = PacketType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_MOVE');
   static const PacketType ITEM_PACK = PacketType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_PACK');
+  static const PacketType MEMBER_CREATE = PacketType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MEMBER_CREATE');
+  static const PacketType MEMBER_EDIT = PacketType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MEMBER_EDIT');
+  static const PacketType MEMBER_DELETE = PacketType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MEMBER_DELETE');
 
   static const $core.List<PacketType> values = <PacketType> [
     PACKLISTE_CREATE,
@@ -34,6 +37,9 @@ class PacketType extends $pb.ProtobufEnum {
     ITEM_DELETE,
     ITEM_MOVE,
     ITEM_PACK,
+    MEMBER_CREATE,
+    MEMBER_EDIT,
+    MEMBER_DELETE,
   ];
 
   static final $core.Map<$core.int, PacketType> _byValue = $pb.ProtobufEnum.initByValue(values);

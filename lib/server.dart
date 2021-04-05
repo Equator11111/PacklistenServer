@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:packliste/src/MemberCommService.dart';
 import 'package:packliste/src/PacklisteCommService.dart';
 import 'package:grpc/grpc.dart' as grpc;
 
@@ -24,8 +25,13 @@ class Server {
 
     final wService = WebsocketService();
     final pComService = PacklisteCommService(dbconn, wService);
+    final mComService = MemberCommService(dbconn, wService);
 
-    final server = grpc.Server([pComService, wService]);
+    final server = grpc.Server([
+      pComService,
+      mComService,
+      wService,
+    ]);
     await server.serve(port: contents['port']);
     print('Server listening on port ${server.port}...');
   }
