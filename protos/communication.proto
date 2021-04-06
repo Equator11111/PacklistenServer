@@ -30,6 +30,3 @@ message Member {
     bool everyone = 4;
 }
 
-message Id {
-    int32 id = 1;
-}

@@ -15,10 +15,15 @@ class PacklisteCommService extends PacklisteCommServiceBase {
   Future<Packliste> createPackliste(
       grpc.ServiceCall call, Packliste request) async {
     print('CreatePackliste');
+    if (!request.hasName()) {
+      call.sendTrailers(
+          status: grpc.StatusCode.invalidArgument, message: 'Name missing');
+      return null;
+    }
     var resultId = (await conn
             .query('INSERT INTO Packliste (name) VALUES (?)', [request.name]))
         .insertId;
-    var everyoneMember = await conn.query(
+    await conn.query(
         'INSERT INTO Member (name, packliste, everyone) VALUES (?,?,?)',
         ['Everyone', resultId, 1]);
     var results = await conn
@@ -30,6 +35,11 @@ class PacklisteCommService extends PacklisteCommServiceBase {
   @override
   Future<Empty> deletePackliste(grpc.ServiceCall call, Id request) async {
     print('DeletePackliste');
+    if (!request.hasId()) {
+      call.sendTrailers(
+          status: grpc.StatusCode.invalidArgument, message: 'Id missing');
+      return null;
+    }
     var results =
         await conn.query('DELETE FROM Packliste where id=?', [request.id]);
     if (results.affectedRows == 0) {
@@ -40,12 +50,23 @@ class PacklisteCommService extends PacklisteCommServiceBase {
     }
     wSocket
         .sendPacket(Packet(type: PacketType.PACKLISTE_DELETE, id: request.id));
+    wSocket.deleteStream(request.id);
     return Empty();
   }
 
   @override
   Future<Empty> editPackliste(grpc.ServiceCall call, Packliste request) async {
     print('EditPackliste');
+    if (!request.hasId()) {
+      call.sendTrailers(
+          status: grpc.StatusCode.invalidArgument, message: 'Id missing');
+      return null;
+    }
+    if (!request.hasName()) {
+      call.sendTrailers(
+          status: grpc.StatusCode.invalidArgument, message: 'Name missing');
+      return null;
+    }
     var results = await conn.query(
         'UPDATE Packliste SET name =? where id=?', [request.name, request.id]);
     if (results.affectedRows == 0) {
@@ -62,6 +83,10 @@ class PacklisteCommService extends PacklisteCommServiceBase {
   @override
   Future<Packliste> getPackliste(grpc.ServiceCall call, Id request) async {
     print('GetPackliste');
+    if (!request.hasId()) {
+      call.sendTrailers(
+          status: grpc.StatusCode.invalidArgument, message: 'Id missing');
+    }
     var results = await conn
         .query('select id,name from Packliste where id=?', [request.id]);
     if (results.isEmpty) {

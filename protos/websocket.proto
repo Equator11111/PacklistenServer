@@ -2,7 +2,8 @@ syntax = "proto3";
 import "common.proto";
 
 service PacklisteSocket {
-    rpc GetSocket (Empty) returns (stream Packet) {}
+    rpc GetSocket (Id) returns (stream Packet) {}
+    rpc PacklisteUpdates (Empty) returns (stream Packet) {}
 }
 
 enum PacketType {
