@@ -276,3 +276,134 @@ abstract class MemberCommServiceBase extends $grpc.Service {
   $async.Future<$1.Empty> editMember($grpc.ServiceCall call, $0.Member request);
   $async.Future<$1.Empty> deleteMember($grpc.ServiceCall call, $1.Id request);
 }
+
+class CategoryCommClient extends $grpc.Client {
+  static final _$getCategory = $grpc.ClientMethod<$1.Id, $0.Category>(
+      '/CategoryComm/GetCategory',
+      ($1.Id value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Category.fromBuffer(value));
+  static final _$getCategories = $grpc.ClientMethod<$1.Id, $0.Category>(
+      '/CategoryComm/GetCategories',
+      ($1.Id value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Category.fromBuffer(value));
+  static final _$createCategory = $grpc.ClientMethod<$0.Category, $0.Category>(
+      '/CategoryComm/CreateCategory',
+      ($0.Category value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Category.fromBuffer(value));
+  static final _$editCategory = $grpc.ClientMethod<$0.Category, $1.Empty>(
+      '/CategoryComm/EditCategory',
+      ($0.Category value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$deleteCategory = $grpc.ClientMethod<$1.Id, $1.Empty>(
+      '/CategoryComm/DeleteCategory',
+      ($1.Id value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+
+  CategoryCommClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
+
+  $grpc.ResponseFuture<$0.Category> getCategory($1.Id request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getCategory, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.Category> getCategories($1.Id request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$getCategories, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Category> createCategory($0.Category request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$createCategory, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> editCategory($0.Category request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$editCategory, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> deleteCategory($1.Id request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$deleteCategory, request, options: options);
+  }
+}
+
+abstract class CategoryCommServiceBase extends $grpc.Service {
+  $core.String get $name => 'CategoryComm';
+
+  CategoryCommServiceBase() {
+    $addMethod($grpc.ServiceMethod<$1.Id, $0.Category>(
+        'GetCategory',
+        getCategory_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
+        ($0.Category value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Id, $0.Category>(
+        'GetCategories',
+        getCategories_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
+        ($0.Category value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Category, $0.Category>(
+        'CreateCategory',
+        createCategory_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Category.fromBuffer(value),
+        ($0.Category value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Category, $1.Empty>(
+        'EditCategory',
+        editCategory_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Category.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Id, $1.Empty>(
+        'DeleteCategory',
+        deleteCategory_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+  }
+
+  $async.Future<$0.Category> getCategory_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.Id> request) async {
+    return getCategory(call, await request);
+  }
+
+  $async.Stream<$0.Category> getCategories_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.Id> request) async* {
+    yield* getCategories(call, await request);
+  }
+
+  $async.Future<$0.Category> createCategory_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Category> request) async {
+    return createCategory(call, await request);
+  }
+
+  $async.Future<$1.Empty> editCategory_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Category> request) async {
+    return editCategory(call, await request);
+  }
+
+  $async.Future<$1.Empty> deleteCategory_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.Id> request) async {
+    return deleteCategory(call, await request);
+  }
+
+  $async.Future<$0.Category> getCategory($grpc.ServiceCall call, $1.Id request);
+  $async.Stream<$0.Category> getCategories(
+      $grpc.ServiceCall call, $1.Id request);
+  $async.Future<$0.Category> createCategory(
+      $grpc.ServiceCall call, $0.Category request);
+  $async.Future<$1.Empty> editCategory(
+      $grpc.ServiceCall call, $0.Category request);
+  $async.Future<$1.Empty> deleteCategory($grpc.ServiceCall call, $1.Id request);
+}

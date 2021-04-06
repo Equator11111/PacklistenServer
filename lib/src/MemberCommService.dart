@@ -14,7 +14,6 @@ class MemberCommService extends MemberCommServiceBase {
 
   @override
   Future<Member> createMember(ServiceCall call, Member request) async {
-    print('CreateMember');
     if (request.hasEveryone() && request.everyone) {
       call.sendTrailers(
           status: StatusCode.invalidArgument,
@@ -45,15 +44,15 @@ class MemberCommService extends MemberCommServiceBase {
     wSocket.sendPacket(Packet(type: PacketType.MEMBER_CREATE, id: resultId),
         packlisteId: member.first[2]);
     return Member(
-        id: member.first[0],
-        name: member.first[1],
-        pId: member.first[2],
-        everyone: member.first[3] == 1);
+      id: member.first[0],
+      name: member.first[1],
+      pId: member.first[2],
+      everyone: member.first[3] == 1,
+    );
   }
 
   @override
   Future<Empty> deleteMember(ServiceCall call, Id request) async {
-    print('DeleteMember');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
@@ -82,7 +81,6 @@ class MemberCommService extends MemberCommServiceBase {
 
   @override
   Future<Empty> editMember(ServiceCall call, Member request) async {
-    print('EditMember');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
@@ -108,25 +106,23 @@ class MemberCommService extends MemberCommServiceBase {
           message: 'Cannot modify Everyone-member');
       return null;
     }
-    var results = await conn.query(
+    await conn.query(
         'UPDATE Member SET name=? where id=?', [request.name, request.id]);
-    if (results.affectedRows != 0) {
-      wSocket.sendPacket(Packet(type: PacketType.MEMBER_EDIT, id: request.id),
-          packlisteId: m.first[2]);
-    }
+    wSocket.sendPacket(Packet(type: PacketType.MEMBER_EDIT, id: request.id),
+        packlisteId: m.first[2]);
+
     return Empty();
   }
 
   @override
   Future<Member> getMember(ServiceCall call, Id request) async {
-    print('GetMember');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
       return null;
     }
     var results = await conn.query(
-        'SELECT id,name,packliste,everyone FROM Member where id=?',
+        'SELECT id,name,packliste,everyone FROM Member WHERE id=?',
         [request.id]);
     if (results.isEmpty) {
       call.sendTrailers(
@@ -142,10 +138,10 @@ class MemberCommService extends MemberCommServiceBase {
 //returns members for Packliste
   @override
   Stream<Member> getMembers(ServiceCall call, Id request) async* {
-    print('GetMembers');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
+      return;
     }
     var results = await conn.query(
         'SELECT id,name,packliste,everyone FROM Member where packliste=?',

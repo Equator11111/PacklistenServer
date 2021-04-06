@@ -8,6 +8,18 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use categoryDescriptor instead')
+const Category$json = const {
+  '1': 'Category',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'pId', '3': 3, '4': 1, '5': 5, '10': 'pId'},
+  ],
+};
+
+/// Descriptor for `Category`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List categoryDescriptor = $convert.base64Decode('CghDYXRlZ29yeRIOCgJpZBgBIAEoBVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIQCgNwSWQYAyABKAVSA3BJZA==');
 @$core.Deprecated('Use packlisteDescriptor instead')
 const Packliste$json = const {
   '1': 'Packliste',

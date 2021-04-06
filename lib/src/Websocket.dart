@@ -25,17 +25,13 @@ class WebsocketService extends PacklisteSocketServiceBase {
 
   @override
   Stream<Packet> getSocket(ServiceCall call, Id request) {
-    print('got client');
     var s = sw.getStream(request.id);
-    print(s.isBroadcast);
     return s;
   }
 
   @override
   Stream<Packet> packlisteUpdates(ServiceCall call, Empty request) {
-    print('got client general');
     var s = sw.getStream();
-    print(s.isBroadcast);
     return s;
   }
 }

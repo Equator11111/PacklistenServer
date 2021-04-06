@@ -18,6 +18,20 @@ service MemberComm {
     rpc DeleteMember (Id) returns (Empty);
 }
 
+service CategoryComm {
+    rpc GetCategory (Id) returns (Category);
+    rpc GetCategories (Id) returns (stream Category);
+    rpc CreateCategory (Category) returns (Category);
+    rpc EditCategory (Category) returns (Empty);
+    rpc DeleteCategory (Id) returns (Empty);
+}
+
+message Category {
+    int32 id = 1;
+    string name = 2;
+    int32 pId = 3;
+}
+
 message Packliste {
     int32 id = 1;
     string name = 2;   
