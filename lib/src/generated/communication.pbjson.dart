@@ -8,6 +8,19 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use itemDescriptor instead')
+const Item$json = const {
+  '1': 'Item',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'Category', '3': 3, '4': 1, '5': 5, '10': 'Category'},
+    const {'1': 'amount', '3': 4, '4': 1, '5': 5, '10': 'amount'},
+  ],
+};
+
+/// Descriptor for `Item`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List itemDescriptor = $convert.base64Decode('CgRJdGVtEg4KAmlkGAEgASgFUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhoKCENhdGVnb3J5GAMgASgFUghDYXRlZ29yeRIWCgZhbW91bnQYBCABKAVSBmFtb3VudA==');
 @$core.Deprecated('Use categoryDescriptor instead')
 const Category$json = const {
   '1': 'Category',

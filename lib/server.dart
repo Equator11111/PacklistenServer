@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:packliste/src/CategoryCommService.dart';
+import 'package:packliste/src/ItemCommService.dart';
 import 'package:packliste/src/MemberCommService.dart';
 import 'package:packliste/src/PacklisteCommService.dart';
 import 'package:grpc/grpc.dart' as grpc;
@@ -28,12 +29,14 @@ class Server {
     final pComService = PacklisteCommService(dbconn, wService);
     final mComService = MemberCommService(dbconn, wService);
     final cComService = CategoryCommService(dbconn, wService);
+    final iComService = ItemCommService(dbconn, wService);
 
     final server = grpc.Server([
       pComService,
       mComService,
       wService,
       cComService,
+      iComService,
     ]);
     await server.serve(port: contents['port']);
     print('Server listening on port ${server.port}...');

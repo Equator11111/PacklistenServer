@@ -18,7 +18,6 @@ enum PacketType {
     ITEM_CREATE = 6;
     ITEM_EDIT = 7;
     ITEM_DELETE = 8;
-    ITEM_MOVE = 9;
     
     ITEM_PACK = 10;
 

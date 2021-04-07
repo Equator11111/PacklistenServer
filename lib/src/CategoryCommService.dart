@@ -14,7 +14,6 @@ class CategoryCommService extends CategoryCommServiceBase {
 
   @override
   Future<Category> createCategory(ServiceCall call, Category request) async {
-    print('CreateCategory');
     if (!request.hasName()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Name missing');
@@ -47,7 +46,6 @@ class CategoryCommService extends CategoryCommServiceBase {
 
   @override
   Future<Empty> deleteCategory(ServiceCall call, Id request) async {
-    print('DeleteCategory');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
@@ -69,7 +67,6 @@ class CategoryCommService extends CategoryCommServiceBase {
 
   @override
   Future<Empty> editCategory(ServiceCall call, Category request) async {
-    print('EditCategory');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
@@ -97,7 +94,6 @@ class CategoryCommService extends CategoryCommServiceBase {
 
   @override
   Stream<Category> getCategories(ServiceCall call, Id request) async* {
-    print('GetCategories');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
@@ -118,7 +114,6 @@ class CategoryCommService extends CategoryCommServiceBase {
 
   @override
   Future<Category> getCategory(ServiceCall call, Id request) async {
-    print('GetCategory');
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
