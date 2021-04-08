@@ -154,10 +154,116 @@ class ItemCommService extends ItemCommServiceBase {
     }
     if (itemId != null) {
       var id = await conn.query(
-          'SELECT c.packliste FROM Category c INNER JOIN Item i ON c.id = i.category WHERE i.id=1');
+          'SELECT c.packliste FROM Category c INNER JOIN Item i ON c.id = i.category WHERE i.id=?',
+          [itemId]);
       if (id.isEmpty) throw Exception('Not found');
       return id.first[0];
     }
     throw Exception('No argument specified');
+  }
+
+  @override
+  Future<Empty> packItem(ServiceCall call, Item_Member request) async {
+    if (!request.hasItem()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'ItemId missing');
+      return null;
+    }
+    if (!request.hasMember()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'MemberId missing');
+      return null;
+    }
+    if (!request.hasAmount()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'Amount missing');
+      return null;
+    }
+    var results = await conn.query(
+        'SELECT item, member, amount FROM Item_Member where item=? AND member=?',
+        [request.item, request.member]);
+    if (results.isEmpty) {
+      call.sendTrailers(
+          status: StatusCode.notFound,
+          message: 'This member should not pack this item');
+      return null;
+    }
+    await conn.query(
+        'UPDATE Item_Member SET amount=? WHERE item=? AND member=?',
+        [request.amount, request.item, request.member]);
+    wSocket.sendPacket(
+      Packet(type: PacketType.ITEM_PACK, id: request.item, mId: request.member),
+      packlisteId: await getPacklisteId(itemId: request.item),
+    );
+    return Empty();
+  }
+
+  @override
+  Future<Empty> itemMemberEdit(
+      ServiceCall call, Item_Member_Create request) async {
+    if (!request.hasItem()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'ItemId missing');
+      return null;
+    }
+    if (!request.hasMember()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'MemberId missing');
+      return null;
+    }
+    if (!request.hasPack()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'Pack missing');
+      return null;
+    }
+    var results = await conn.query(
+        'SELECT item, member, amount FROM Item_Member where item=? AND member=?',
+        [request.item, request.member]);
+    if (request.pack) {
+      //Should pack the item
+      if (results.isEmpty) {
+        await conn.query(
+            'INSERT INTO Item_Member (item, member, amount) values (?,?,?)',
+            [request.item, request.member, 0]);
+        wSocket.sendPacket(
+            Packet(
+                type: PacketType.ITEM_MEMBER_EDIT,
+                id: request.item,
+                mId: request.member),
+            packlisteId: await getPacklisteId(itemId: request.item));
+      }
+      return Empty();
+    }
+    //Should NOT pack the item
+    if (results.isEmpty) return Empty();
+    await conn.query('DELETE FROM Item_Member WHERE item=? AND Member=?',
+        [request.item, request.member]);
+    wSocket.sendPacket(
+        Packet(
+            type: PacketType.ITEM_MEMBER_EDIT,
+            id: request.item,
+            mId: request.member),
+        packlisteId: await getPacklisteId(itemId: request.item));
+    return Empty();
+  }
+
+  @override
+  Stream<Item_Member> getItemsForMember(ServiceCall call, Id request) async* {
+    if (!request.hasId()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'Id missing');
+      return;
+    }
+    var results = await conn.query(
+        'SELECT item,member,amount FROM Item_Member where member=?',
+        [request.id]);
+    for (var r in results) {
+      var im = Item_Member()
+        ..item = r[0]
+        ..member = r[1]
+        ..amount = r[2];
+      if (call.isCanceled) return;
+      yield im;
+    }
   }
 }

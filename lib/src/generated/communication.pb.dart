@@ -9,6 +9,156 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class Item_Member extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Item_Member', createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'item', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'member', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amount', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  Item_Member._() : super();
+  factory Item_Member({
+    $core.int? item,
+    $core.int? member,
+    $core.int? amount,
+  }) {
+    final _result = create();
+    if (item != null) {
+      _result.item = item;
+    }
+    if (member != null) {
+      _result.member = member;
+    }
+    if (amount != null) {
+      _result.amount = amount;
+    }
+    return _result;
+  }
+  factory Item_Member.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Item_Member.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Item_Member clone() => Item_Member()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Item_Member copyWith(void Function(Item_Member) updates) => super.copyWith((message) => updates(message as Item_Member)) as Item_Member; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Item_Member create() => Item_Member._();
+  Item_Member createEmptyInstance() => create();
+  static $pb.PbList<Item_Member> createRepeated() => $pb.PbList<Item_Member>();
+  @$core.pragma('dart2js:noInline')
+  static Item_Member getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Item_Member>(create);
+  static Item_Member? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get item => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set item($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasItem() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearItem() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get member => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set member($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMember() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMember() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get amount => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set amount($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasAmount() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAmount() => clearField(3);
+}
+
+class Item_Member_Create extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Item_Member_Create', createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'item', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'member', $pb.PbFieldType.O3)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pack')
+    ..hasRequiredFields = false
+  ;
+
+  Item_Member_Create._() : super();
+  factory Item_Member_Create({
+    $core.int? item,
+    $core.int? member,
+    $core.bool? pack,
+  }) {
+    final _result = create();
+    if (item != null) {
+      _result.item = item;
+    }
+    if (member != null) {
+      _result.member = member;
+    }
+    if (pack != null) {
+      _result.pack = pack;
+    }
+    return _result;
+  }
+  factory Item_Member_Create.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Item_Member_Create.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Item_Member_Create clone() => Item_Member_Create()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Item_Member_Create copyWith(void Function(Item_Member_Create) updates) => super.copyWith((message) => updates(message as Item_Member_Create)) as Item_Member_Create; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Item_Member_Create create() => Item_Member_Create._();
+  Item_Member_Create createEmptyInstance() => create();
+  static $pb.PbList<Item_Member_Create> createRepeated() => $pb.PbList<Item_Member_Create>();
+  @$core.pragma('dart2js:noInline')
+  static Item_Member_Create getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Item_Member_Create>(create);
+  static Item_Member_Create? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get item => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set item($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasItem() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearItem() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get member => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set member($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMember() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMember() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get pack => $_getBF(2);
+  @$pb.TagNumber(3)
+  set pack($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPack() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPack() => clearField(3);
+}
+
 class Item extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Item', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)

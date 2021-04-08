@@ -19,6 +19,7 @@ class PacketType extends $pb.ProtobufEnum {
   static const PacketType ITEM_CREATE = PacketType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_CREATE');
   static const PacketType ITEM_EDIT = PacketType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_EDIT');
   static const PacketType ITEM_DELETE = PacketType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_DELETE');
+  static const PacketType ITEM_MEMBER_EDIT = PacketType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_MEMBER_EDIT');
   static const PacketType ITEM_PACK = PacketType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ITEM_PACK');
   static const PacketType MEMBER_CREATE = PacketType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MEMBER_CREATE');
   static const PacketType MEMBER_EDIT = PacketType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MEMBER_EDIT');
@@ -34,6 +35,7 @@ class PacketType extends $pb.ProtobufEnum {
     ITEM_CREATE,
     ITEM_EDIT,
     ITEM_DELETE,
+    ITEM_MEMBER_EDIT,
     ITEM_PACK,
     MEMBER_CREATE,
     MEMBER_EDIT,

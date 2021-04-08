@@ -17,6 +17,7 @@ class Packet extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Packet', createEmptyInstance: create)
     ..e<PacketType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PacketType.PACKLISTE_CREATE, valueOf: PacketType.valueOf, enumValues: PacketType.values)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mId', $pb.PbFieldType.O3, protoName: 'mId')
     ..hasRequiredFields = false
   ;
 
@@ -24,6 +25,7 @@ class Packet extends $pb.GeneratedMessage {
   factory Packet({
     PacketType? type,
     $core.int? id,
+    $core.int? mId,
   }) {
     final _result = create();
     if (type != null) {
@@ -31,6 +33,9 @@ class Packet extends $pb.GeneratedMessage {
     }
     if (id != null) {
       _result.id = id;
+    }
+    if (mId != null) {
+      _result.mId = mId;
     }
     return _result;
   }
@@ -72,5 +77,14 @@ class Packet extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(1);
   @$pb.TagNumber(2)
   void clearId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get mId => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set mId($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMId() => clearField(3);
 }
 

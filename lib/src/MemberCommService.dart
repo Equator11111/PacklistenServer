@@ -156,4 +156,24 @@ class MemberCommService extends MemberCommServiceBase {
       yield m;
     }
   }
+
+  @override
+  Stream<Item_Member> getMembersForItem(ServiceCall call, Id request) async* {
+    if (!request.hasId()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'Id missing');
+      return;
+    }
+    var results = await conn.query(
+        'SELECT item,member,amount from Item_Member WHERE item=?',
+        [request.id]);
+    for (var r in results) {
+      var im = Item_Member()
+        ..item = r[0]
+        ..member = r[1]
+        ..amount = r[2];
+      if (call.isCanceled) return;
+      yield im;
+    }
+  }
 }

@@ -169,6 +169,10 @@ class MemberCommClient extends $grpc.Client {
       '/MemberComm/DeleteMember',
       ($1.Id value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$getMembersForItem = $grpc.ClientMethod<$1.Id, $0.Item_Member>(
+      '/MemberComm/GetMembersForItem',
+      ($1.Id value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value));
 
   MemberCommClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -200,6 +204,13 @@ class MemberCommClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Empty> deleteMember($1.Id request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteMember, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.Item_Member> getMembersForItem($1.Id request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$getMembersForItem, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -242,6 +253,13 @@ abstract class MemberCommServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Id, $0.Item_Member>(
+        'GetMembersForItem',
+        getMembersForItem_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
+        ($0.Item_Member value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Member> getMember_Pre(
@@ -269,12 +287,19 @@ abstract class MemberCommServiceBase extends $grpc.Service {
     return deleteMember(call, await request);
   }
 
+  $async.Stream<$0.Item_Member> getMembersForItem_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.Id> request) async* {
+    yield* getMembersForItem(call, await request);
+  }
+
   $async.Future<$0.Member> getMember($grpc.ServiceCall call, $1.Id request);
   $async.Stream<$0.Member> getMembers($grpc.ServiceCall call, $1.Id request);
   $async.Future<$0.Member> createMember(
       $grpc.ServiceCall call, $0.Member request);
   $async.Future<$1.Empty> editMember($grpc.ServiceCall call, $0.Member request);
   $async.Future<$1.Empty> deleteMember($grpc.ServiceCall call, $1.Id request);
+  $async.Stream<$0.Item_Member> getMembersForItem(
+      $grpc.ServiceCall call, $1.Id request);
 }
 
 class CategoryCommClient extends $grpc.Client {
@@ -417,6 +442,10 @@ class ItemCommClient extends $grpc.Client {
       '/ItemComm/GetItems',
       ($1.Id value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Item.fromBuffer(value));
+  static final _$getItemsForMember = $grpc.ClientMethod<$1.Id, $0.Item_Member>(
+      '/ItemComm/GetItemsForMember',
+      ($1.Id value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value));
   static final _$createItem = $grpc.ClientMethod<$0.Item, $0.Item>(
       '/ItemComm/CreateItem',
       ($0.Item value) => value.writeToBuffer(),
@@ -429,6 +458,15 @@ class ItemCommClient extends $grpc.Client {
       '/ItemComm/DeleteItem',
       ($1.Id value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$packItem = $grpc.ClientMethod<$0.Item_Member, $1.Empty>(
+      '/ItemComm/PackItem',
+      ($0.Item_Member value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$itemMemberEdit =
+      $grpc.ClientMethod<$0.Item_Member_Create, $1.Empty>(
+          '/ItemComm/ItemMemberEdit',
+          ($0.Item_Member_Create value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
 
   ItemCommClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -447,6 +485,13 @@ class ItemCommClient extends $grpc.Client {
         options: options);
   }
 
+  $grpc.ResponseStream<$0.Item_Member> getItemsForMember($1.Id request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$getItemsForMember, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
   $grpc.ResponseFuture<$0.Item> createItem($0.Item request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createItem, request, options: options);
@@ -460,6 +505,16 @@ class ItemCommClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Empty> deleteItem($1.Id request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteItem, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> packItem($0.Item_Member request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$packItem, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Empty> itemMemberEdit($0.Item_Member_Create request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$itemMemberEdit, request, options: options);
   }
 }
 
@@ -481,6 +536,13 @@ abstract class ItemCommServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
         ($0.Item value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.Id, $0.Item_Member>(
+        'GetItemsForMember',
+        getItemsForMember_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
+        ($0.Item_Member value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Item, $0.Item>(
         'CreateItem',
         createItem_Pre,
@@ -502,6 +564,21 @@ abstract class ItemCommServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Item_Member, $1.Empty>(
+        'PackItem',
+        packItem_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Item_Member_Create, $1.Empty>(
+        'ItemMemberEdit',
+        itemMemberEdit_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.Item_Member_Create.fromBuffer(value),
+        ($1.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Item> getItem_Pre(
@@ -512,6 +589,11 @@ abstract class ItemCommServiceBase extends $grpc.Service {
   $async.Stream<$0.Item> getItems_Pre(
       $grpc.ServiceCall call, $async.Future<$1.Id> request) async* {
     yield* getItems(call, await request);
+  }
+
+  $async.Stream<$0.Item_Member> getItemsForMember_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.Id> request) async* {
+    yield* getItemsForMember(call, await request);
   }
 
   $async.Future<$0.Item> createItem_Pre(
@@ -529,9 +611,25 @@ abstract class ItemCommServiceBase extends $grpc.Service {
     return deleteItem(call, await request);
   }
 
+  $async.Future<$1.Empty> packItem_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Item_Member> request) async {
+    return packItem(call, await request);
+  }
+
+  $async.Future<$1.Empty> itemMemberEdit_Pre($grpc.ServiceCall call,
+      $async.Future<$0.Item_Member_Create> request) async {
+    return itemMemberEdit(call, await request);
+  }
+
   $async.Future<$0.Item> getItem($grpc.ServiceCall call, $1.Id request);
   $async.Stream<$0.Item> getItems($grpc.ServiceCall call, $1.Id request);
+  $async.Stream<$0.Item_Member> getItemsForMember(
+      $grpc.ServiceCall call, $1.Id request);
   $async.Future<$0.Item> createItem($grpc.ServiceCall call, $0.Item request);
   $async.Future<$1.Empty> editItem($grpc.ServiceCall call, $0.Item request);
   $async.Future<$1.Empty> deleteItem($grpc.ServiceCall call, $1.Id request);
+  $async.Future<$1.Empty> packItem(
+      $grpc.ServiceCall call, $0.Item_Member request);
+  $async.Future<$1.Empty> itemMemberEdit(
+      $grpc.ServiceCall call, $0.Item_Member_Create request);
 }

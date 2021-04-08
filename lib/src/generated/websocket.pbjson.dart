@@ -21,6 +21,7 @@ const PacketType$json = const {
     const {'1': 'ITEM_CREATE', '2': 6},
     const {'1': 'ITEM_EDIT', '2': 7},
     const {'1': 'ITEM_DELETE', '2': 8},
+    const {'1': 'ITEM_MEMBER_EDIT', '2': 9},
     const {'1': 'ITEM_PACK', '2': 10},
     const {'1': 'MEMBER_CREATE', '2': 11},
     const {'1': 'MEMBER_EDIT', '2': 12},
@@ -29,15 +30,16 @@ const PacketType$json = const {
 };
 
 /// Descriptor for `PacketType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List packetTypeDescriptor = $convert.base64Decode('CgpQYWNrZXRUeXBlEhQKEFBBQ0tMSVNURV9DUkVBVEUQABISCg5QQUNLTElTVEVfRURJVBABEhQKEFBBQ0tMSVNURV9ERUxFVEUQAhITCg9DQVRFR09SWV9DUkVBVEUQAxIRCg1DQVRFR09SWV9FRElUEAQSEwoPQ0FURUdPUllfREVMRVRFEAUSDwoLSVRFTV9DUkVBVEUQBhINCglJVEVNX0VESVQQBxIPCgtJVEVNX0RFTEVURRAIEg0KCUlURU1fUEFDSxAKEhEKDU1FTUJFUl9DUkVBVEUQCxIPCgtNRU1CRVJfRURJVBAMEhEKDU1FTUJFUl9ERUxFVEUQDQ==');
+final $typed_data.Uint8List packetTypeDescriptor = $convert.base64Decode('CgpQYWNrZXRUeXBlEhQKEFBBQ0tMSVNURV9DUkVBVEUQABISCg5QQUNLTElTVEVfRURJVBABEhQKEFBBQ0tMSVNURV9ERUxFVEUQAhITCg9DQVRFR09SWV9DUkVBVEUQAxIRCg1DQVRFR09SWV9FRElUEAQSEwoPQ0FURUdPUllfREVMRVRFEAUSDwoLSVRFTV9DUkVBVEUQBhINCglJVEVNX0VESVQQBxIPCgtJVEVNX0RFTEVURRAIEhQKEElURU1fTUVNQkVSX0VESVQQCRINCglJVEVNX1BBQ0sQChIRCg1NRU1CRVJfQ1JFQVRFEAsSDwoLTUVNQkVSX0VESVQQDBIRCg1NRU1CRVJfREVMRVRFEA0=');
 @$core.Deprecated('Use packetDescriptor instead')
 const Packet$json = const {
   '1': 'Packet',
   '2': const [
     const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.PacketType', '10': 'type'},
     const {'1': 'id', '3': 2, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'mId', '3': 3, '4': 1, '5': 5, '10': 'mId'},
   ],
 };
 
 /// Descriptor for `Packet`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List packetDescriptor = $convert.base64Decode('CgZQYWNrZXQSHwoEdHlwZRgBIAEoDjILLlBhY2tldFR5cGVSBHR5cGUSDgoCaWQYAiABKAVSAmlk');
+final $typed_data.Uint8List packetDescriptor = $convert.base64Decode('CgZQYWNrZXQSHwoEdHlwZRgBIAEoDjILLlBhY2tldFR5cGVSBHR5cGUSDgoCaWQYAiABKAVSAmlkEhAKA21JZBgDIAEoBVIDbUlk');

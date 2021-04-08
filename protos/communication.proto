@@ -16,6 +16,7 @@ service MemberComm {
     rpc CreateMember (Member) returns (Member) {}
     rpc EditMember (Member) returns (Empty) {}
     rpc DeleteMember (Id) returns (Empty);
+    rpc GetMembersForItem (Id) returns (stream Item_Member);
 }
 
 service CategoryComm {
@@ -29,9 +30,24 @@ service CategoryComm {
 service ItemComm {
     rpc GetItem (Id) returns (Item);
     rpc GetItems (Id) returns (stream Item);
+    rpc GetItemsForMember(Id) returns (stream Item_Member);
     rpc CreateItem (Item) returns (Item);
     rpc EditItem (Item) returns (Empty);
     rpc DeleteItem (Id) returns (Empty);
+    rpc PackItem (Item_Member) returns (Empty);
+    rpc ItemMemberEdit (Item_Member_Create) returns (Empty);
+}
+
+message Item_Member {
+    int32 item = 1;
+    int32 member = 2;
+    int32 amount = 3;
+}
+
+message Item_Member_Create {
+    int32 item = 1;
+    int32 member = 2;
+    bool pack = 3;
 }
 
 message Item {

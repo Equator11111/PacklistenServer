@@ -8,6 +8,30 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use item_MemberDescriptor instead')
+const Item_Member$json = const {
+  '1': 'Item_Member',
+  '2': const [
+    const {'1': 'item', '3': 1, '4': 1, '5': 5, '10': 'item'},
+    const {'1': 'member', '3': 2, '4': 1, '5': 5, '10': 'member'},
+    const {'1': 'amount', '3': 3, '4': 1, '5': 5, '10': 'amount'},
+  ],
+};
+
+/// Descriptor for `Item_Member`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List item_MemberDescriptor = $convert.base64Decode('CgtJdGVtX01lbWJlchISCgRpdGVtGAEgASgFUgRpdGVtEhYKBm1lbWJlchgCIAEoBVIGbWVtYmVyEhYKBmFtb3VudBgDIAEoBVIGYW1vdW50');
+@$core.Deprecated('Use item_Member_CreateDescriptor instead')
+const Item_Member_Create$json = const {
+  '1': 'Item_Member_Create',
+  '2': const [
+    const {'1': 'item', '3': 1, '4': 1, '5': 5, '10': 'item'},
+    const {'1': 'member', '3': 2, '4': 1, '5': 5, '10': 'member'},
+    const {'1': 'pack', '3': 3, '4': 1, '5': 8, '10': 'pack'},
+  ],
+};
+
+/// Descriptor for `Item_Member_Create`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List item_Member_CreateDescriptor = $convert.base64Decode('ChJJdGVtX01lbWJlcl9DcmVhdGUSEgoEaXRlbRgBIAEoBVIEaXRlbRIWCgZtZW1iZXIYAiABKAVSBm1lbWJlchISCgRwYWNrGAMgASgIUgRwYWNr');
 @$core.Deprecated('Use itemDescriptor instead')
 const Item$json = const {
   '1': 'Item',

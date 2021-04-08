@@ -18,7 +18,7 @@ enum PacketType {
     ITEM_CREATE = 6;
     ITEM_EDIT = 7;
     ITEM_DELETE = 8;
-    
+    ITEM_MEMBER_EDIT = 9;
     ITEM_PACK = 10;
 
     MEMBER_CREATE = 11;
@@ -28,4 +28,5 @@ enum PacketType {
 message Packet {
     PacketType type = 1;
     int32 id = 2;
+    int32 mId = 3;
 }
