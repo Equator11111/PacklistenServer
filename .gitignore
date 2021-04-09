@@ -8,6 +8,6 @@ build/
 # Directory created by dartdoc
 doc/api/
 
-config/config.json
-mysql1/
+#config/config.json
+#mysql1/
 server.code-workspace
