@@ -13,4 +13,4 @@ FROM ubuntu
 COPY --from=base /app/server /server
 ADD /config /config
 EXPOSE 9090
-# ENTRYPOINT "/server"
+ENTRYPOINT "/server"
