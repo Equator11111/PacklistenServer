@@ -1,13 +1,13 @@
 import 'package:grpc/grpc.dart';
-import 'package:mysql1/mysql1.dart';
 import 'package:packliste/src/Websocket.dart';
+import 'package:packliste/src/dbconn.dart';
 import 'package:packliste/src/generated/common.pb.dart';
 import 'package:grpc/src/server/call.dart';
 import 'package:packliste/src/generated/communication.pbgrpc.dart';
 import 'package:packliste/src/generated/websocket.pbgrpc.dart';
 
 class ItemCommService extends ItemCommServiceBase {
-  final MySqlConnection conn;
+  final DbConn conn;
   final WebsocketService wSocket;
 
   ItemCommService(this.conn, this.wSocket);

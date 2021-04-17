@@ -1,12 +1,12 @@
-import 'package:mysql1/mysql1.dart';
 import 'package:packliste/src/Websocket.dart';
+import 'package:packliste/src/dbconn.dart';
 import 'package:packliste/src/generated/common.pb.dart';
 import 'package:packliste/src/generated/communication.pbgrpc.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:packliste/src/generated/websocket.pb.dart';
 
 class PacklisteCommService extends PacklisteCommServiceBase {
-  final MySqlConnection conn;
+  final DbConn conn;
   final WebsocketService wSocket;
 
   PacklisteCommService(this.conn, this.wSocket);

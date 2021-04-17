@@ -8,6 +8,7 @@ import 'package:grpc/grpc.dart' as grpc;
 
 import 'package:mysql1/mysql1.dart';
 import 'package:packliste/src/Websocket.dart';
+import 'package:packliste/src/dbconn.dart';
 
 class Server {
   Future<void> main(List<String> args) async {
@@ -22,8 +23,7 @@ class Server {
         user: s['user'],
         password: s['password'],
         db: s['db']);
-    var dbconn = await MySqlConnection.connect(dbsettings);
-    print('Connected to db ${s['db']} at ${s['host']}:${s['port']}');
+    var dbconn = DbConn(settings: dbsettings);
 
     final wService = WebsocketService();
     final pComService = PacklisteCommService(dbconn, wService);

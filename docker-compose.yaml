@@ -9,7 +9,7 @@ services:
     volumes: 
       - mysql:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3306
 
   phpmyadmin:
     image: phpmyadmin
@@ -23,6 +23,6 @@ services:
     image: equator11111/packliste
     restart: always
     ports:
-      - 80:9090
+      - 9090:9090
 volumes: 
   mysql:
