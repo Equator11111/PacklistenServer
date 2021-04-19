@@ -442,15 +442,18 @@ class ItemCommClient extends $grpc.Client {
       '/ItemComm/GetItems',
       ($1.Id value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Item.fromBuffer(value));
-  static final _$getItemsForMember = $grpc.ClientMethod<$1.Id, $0.Item_Member>(
-      '/ItemComm/GetItemsForMember',
-      ($1.Id value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value));
+  static final _$getItemsForMember =
+      $grpc.ClientMethod<$1.Id, $0.Member_Category_Response>(
+          '/ItemComm/GetItemsForMember',
+          ($1.Id value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.Member_Category_Response.fromBuffer(value));
   static final _$getItemsForMemberAndCategory =
-      $grpc.ClientMethod<$0.Member_Category, $0.Item_Member>(
+      $grpc.ClientMethod<$0.Member_Category, $0.Member_Category_Response>(
           '/ItemComm/GetItemsForMemberAndCategory',
           ($0.Member_Category value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value));
+          ($core.List<$core.int> value) =>
+              $0.Member_Category_Response.fromBuffer(value));
   static final _$createItem = $grpc.ClientMethod<$0.Item, $0.Item>(
       '/ItemComm/CreateItem',
       ($0.Item value) => value.writeToBuffer(),
@@ -490,16 +493,17 @@ class ItemCommClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseStream<$0.Item_Member> getItemsForMember($1.Id request,
+  $grpc.ResponseStream<$0.Member_Category_Response> getItemsForMember(
+      $1.Id request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$getItemsForMember, $async.Stream.fromIterable([request]),
         options: options);
   }
 
-  $grpc.ResponseStream<$0.Item_Member> getItemsForMemberAndCategory(
-      $0.Member_Category request,
-      {$grpc.CallOptions? options}) {
+  $grpc.ResponseStream<$0.Member_Category_Response>
+      getItemsForMemberAndCategory($0.Member_Category request,
+          {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$getItemsForMemberAndCategory, $async.Stream.fromIterable([request]),
         options: options);
@@ -549,20 +553,22 @@ abstract class ItemCommServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
         ($0.Item value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.Id, $0.Item_Member>(
+    $addMethod($grpc.ServiceMethod<$1.Id, $0.Member_Category_Response>(
         'GetItemsForMember',
         getItemsForMember_Pre,
         false,
         true,
         ($core.List<$core.int> value) => $1.Id.fromBuffer(value),
-        ($0.Item_Member value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Member_Category, $0.Item_Member>(
-        'GetItemsForMemberAndCategory',
-        getItemsForMemberAndCategory_Pre,
-        false,
-        true,
-        ($core.List<$core.int> value) => $0.Member_Category.fromBuffer(value),
-        ($0.Item_Member value) => value.writeToBuffer()));
+        ($0.Member_Category_Response value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.Member_Category, $0.Member_Category_Response>(
+            'GetItemsForMemberAndCategory',
+            getItemsForMemberAndCategory_Pre,
+            false,
+            true,
+            ($core.List<$core.int> value) =>
+                $0.Member_Category.fromBuffer(value),
+            ($0.Member_Category_Response value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Item, $0.Item>(
         'CreateItem',
         createItem_Pre,
@@ -611,12 +617,12 @@ abstract class ItemCommServiceBase extends $grpc.Service {
     yield* getItems(call, await request);
   }
 
-  $async.Stream<$0.Item_Member> getItemsForMember_Pre(
+  $async.Stream<$0.Member_Category_Response> getItemsForMember_Pre(
       $grpc.ServiceCall call, $async.Future<$1.Id> request) async* {
     yield* getItemsForMember(call, await request);
   }
 
-  $async.Stream<$0.Item_Member> getItemsForMemberAndCategory_Pre(
+  $async.Stream<$0.Member_Category_Response> getItemsForMemberAndCategory_Pre(
       $grpc.ServiceCall call,
       $async.Future<$0.Member_Category> request) async* {
     yield* getItemsForMemberAndCategory(call, await request);
@@ -649,9 +655,9 @@ abstract class ItemCommServiceBase extends $grpc.Service {
 
   $async.Future<$0.Item> getItem($grpc.ServiceCall call, $1.Id request);
   $async.Stream<$0.Item> getItems($grpc.ServiceCall call, $1.Id request);
-  $async.Stream<$0.Item_Member> getItemsForMember(
+  $async.Stream<$0.Member_Category_Response> getItemsForMember(
       $grpc.ServiceCall call, $1.Id request);
-  $async.Stream<$0.Item_Member> getItemsForMemberAndCategory(
+  $async.Stream<$0.Member_Category_Response> getItemsForMemberAndCategory(
       $grpc.ServiceCall call, $0.Member_Category request);
   $async.Future<$0.Item> createItem($grpc.ServiceCall call, $0.Item request);
   $async.Future<$1.Empty> editItem($grpc.ServiceCall call, $0.Item request);

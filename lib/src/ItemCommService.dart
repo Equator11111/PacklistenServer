@@ -248,27 +248,33 @@ class ItemCommService extends ItemCommServiceBase {
   }
 
   @override
-  Stream<Item_Member> getItemsForMember(ServiceCall call, Id request) async* {
+  Stream<Member_Category_Response> getItemsForMember(
+      ServiceCall call, Id request) async* {
     if (!request.hasId()) {
       call.sendTrailers(
           status: StatusCode.invalidArgument, message: 'Id missing');
       return;
     }
     var results = await conn.query(
-        'SELECT item,member,amount FROM Item_Member WHERE member=?',
+        'SELECT im.item, im.member, im.amount, i.name, i.amount, i.category FROM Item_Member im JOIN Item i ON i.id=im.item WHERE member=?',
         [request.id]);
     for (var r in results) {
       var im = Item_Member()
         ..item = r[0]
         ..member = r[1]
         ..amount = r[2];
+      var i = Item()
+        ..id = r[0]
+        ..name = r[3]
+        ..amount = r[4]
+        ..category = r[5];
       if (call.isCanceled) return;
-      yield im;
+      yield Member_Category_Response(item: i, itemMember: im);
     }
   }
 
   @override
-  Stream<Item_Member> getItemsForMemberAndCategory(
+  Stream<Member_Category_Response> getItemsForMemberAndCategory(
       ServiceCall call, Member_Category request) async* {
     if (!request.hasCategory()) {
       call.sendTrailers(
@@ -281,7 +287,7 @@ class ItemCommService extends ItemCommServiceBase {
       return;
     }
     var results = await conn.query(
-        'SELECT im.item, im.member, im.amount FROM Item_Member im JOIN Item i ON im.item=i.id where im.member=? AND i.category=? ',
+        'SELECT im.item, im.member, im.amount, i.name, i.amount, i.category FROM Item_Member im JOIN Item i ON im.item=i.id where im.member=? AND i.category=? ',
         [request.member, request.category]);
     print(results);
     for (var r in results) {
@@ -289,8 +295,13 @@ class ItemCommService extends ItemCommServiceBase {
         ..item = r[0]
         ..member = r[1]
         ..amount = r[2];
+      var i = Item()
+        ..id = r[0]
+        ..name = r[3]
+        ..amount = r[4]
+        ..category = r[5];
       if (call.isCanceled) return;
-      yield im;
+      yield Member_Category_Response(item: i, itemMember: im);
     }
   }
 }

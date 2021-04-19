@@ -30,8 +30,8 @@ service CategoryComm {
 service ItemComm {
     rpc GetItem (Id) returns (Item);
     rpc GetItems (Id) returns (stream Item);
-    rpc GetItemsForMember(Id) returns (stream Item_Member);
-    rpc GetItemsForMemberAndCategory(Member_Category) returns (stream Item_Member);
+    rpc GetItemsForMember(Id) returns (stream Member_Category_Response);
+    rpc GetItemsForMemberAndCategory(Member_Category) returns (stream Member_Category_Response);
     rpc CreateItem (Item) returns (Item);
     rpc EditItem (Item) returns (Empty);
     rpc DeleteItem (Id) returns (Empty);
@@ -42,6 +42,11 @@ service ItemComm {
 message Member_Category {
     int32 member = 1;
     int32 category = 2;
+}
+
+message Member_Category_Response {
+    Item_Member item_Member = 1;
+    Item item = 2;
 }
 
 message Item_Member {

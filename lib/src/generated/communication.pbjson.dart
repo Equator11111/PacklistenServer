@@ -19,6 +19,17 @@ const Member_Category$json = const {
 
 /// Descriptor for `Member_Category`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List member_CategoryDescriptor = $convert.base64Decode('Cg9NZW1iZXJfQ2F0ZWdvcnkSFgoGbWVtYmVyGAEgASgFUgZtZW1iZXISGgoIY2F0ZWdvcnkYAiABKAVSCGNhdGVnb3J5');
+@$core.Deprecated('Use member_Category_ResponseDescriptor instead')
+const Member_Category_Response$json = const {
+  '1': 'Member_Category_Response',
+  '2': const [
+    const {'1': 'item_Member', '3': 1, '4': 1, '5': 11, '6': '.Item_Member', '10': 'itemMember'},
+    const {'1': 'item', '3': 2, '4': 1, '5': 11, '6': '.Item', '10': 'item'},
+  ],
+};
+
+/// Descriptor for `Member_Category_Response`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List member_Category_ResponseDescriptor = $convert.base64Decode('ChhNZW1iZXJfQ2F0ZWdvcnlfUmVzcG9uc2USLQoLaXRlbV9NZW1iZXIYASABKAsyDC5JdGVtX01lbWJlclIKaXRlbU1lbWJlchIZCgRpdGVtGAIgASgLMgUuSXRlbVIEaXRlbQ==');
 @$core.Deprecated('Use item_MemberDescriptor instead')
 const Item_Member$json = const {
   '1': 'Item_Member',
