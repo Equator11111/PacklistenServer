@@ -255,8 +255,35 @@ class ItemCommService extends ItemCommServiceBase {
       return;
     }
     var results = await conn.query(
-        'SELECT item,member,amount FROM Item_Member where member=?',
+        'SELECT item,member,amount FROM Item_Member WHERE member=?',
         [request.id]);
+    for (var r in results) {
+      var im = Item_Member()
+        ..item = r[0]
+        ..member = r[1]
+        ..amount = r[2];
+      if (call.isCanceled) return;
+      yield im;
+    }
+  }
+
+  @override
+  Stream<Item_Member> getItemsForMemberAndCategory(
+      ServiceCall call, Member_Category request) async* {
+    if (!request.hasCategory()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'Category missing');
+      return;
+    }
+    if (!request.hasMember()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'Member missing');
+      return;
+    }
+    var results = await conn.query(
+        'SELECT im.item, im.member, im.amount FROM Item_Member im JOIN Item i ON im.item=i.id where im.member=? AND i.category=? ',
+        [request.member, request.category]);
+    print(results);
     for (var r in results) {
       var im = Item_Member()
         ..item = r[0]

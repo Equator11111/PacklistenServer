@@ -8,6 +8,17 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use member_CategoryDescriptor instead')
+const Member_Category$json = const {
+  '1': 'Member_Category',
+  '2': const [
+    const {'1': 'member', '3': 1, '4': 1, '5': 5, '10': 'member'},
+    const {'1': 'category', '3': 2, '4': 1, '5': 5, '10': 'category'},
+  ],
+};
+
+/// Descriptor for `Member_Category`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List member_CategoryDescriptor = $convert.base64Decode('Cg9NZW1iZXJfQ2F0ZWdvcnkSFgoGbWVtYmVyGAEgASgFUgZtZW1iZXISGgoIY2F0ZWdvcnkYAiABKAVSCGNhdGVnb3J5');
 @$core.Deprecated('Use item_MemberDescriptor instead')
 const Item_Member$json = const {
   '1': 'Item_Member',

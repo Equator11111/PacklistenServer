@@ -9,6 +9,67 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class Member_Category extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Member_Category', createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'member', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  Member_Category._() : super();
+  factory Member_Category({
+    $core.int? member,
+    $core.int? category,
+  }) {
+    final _result = create();
+    if (member != null) {
+      _result.member = member;
+    }
+    if (category != null) {
+      _result.category = category;
+    }
+    return _result;
+  }
+  factory Member_Category.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Member_Category.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Member_Category clone() => Member_Category()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Member_Category copyWith(void Function(Member_Category) updates) => super.copyWith((message) => updates(message as Member_Category)) as Member_Category; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Member_Category create() => Member_Category._();
+  Member_Category createEmptyInstance() => create();
+  static $pb.PbList<Member_Category> createRepeated() => $pb.PbList<Member_Category>();
+  @$core.pragma('dart2js:noInline')
+  static Member_Category getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Member_Category>(create);
+  static Member_Category? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get member => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set member($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMember() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMember() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get category => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set category($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCategory() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCategory() => clearField(2);
+}
+
 class Item_Member extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Item_Member', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'item', $pb.PbFieldType.O3)
