@@ -37,6 +37,7 @@ service ItemComm {
     rpc DeleteItem (Id) returns (Empty);
     rpc PackItem (Item_Member) returns (Empty);
     rpc ItemMemberEdit (Item_Member_Create) returns (Empty);
+    rpc GetItemAmountForMember(Item_Member) returns (Item_Member);
 }
 
 message Member_Category {

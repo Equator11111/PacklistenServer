@@ -304,4 +304,30 @@ class ItemCommService extends ItemCommServiceBase {
       yield Member_Category_Response(item: i, itemMember: im);
     }
   }
+
+  @override
+  Future<Item_Member> getItemAmountForMember(
+      ServiceCall call, Item_Member request) async {
+    if (!request.hasItem()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'ItemId missing');
+      return null;
+    }
+    if (!request.hasMember()) {
+      call.sendTrailers(
+          status: StatusCode.invalidArgument, message: 'MemberId missing');
+      return null;
+    }
+    var results = await conn.query(
+        'SELECT amount FROM Item_Member WHERE item=? AND member=?',
+        [request.item, request.member]);
+    if (results.isEmpty) {
+      call.sendTrailers(
+          status: StatusCode.notFound,
+          message: 'No itemMember for that combination found');
+      return null;
+    }
+    return Item_Member(
+        item: request.item, member: request.member, amount: results.first[0]);
+  }
 }

@@ -475,6 +475,11 @@ class ItemCommClient extends $grpc.Client {
           '/ItemComm/ItemMemberEdit',
           ($0.Item_Member_Create value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$getItemAmountForMember =
+      $grpc.ClientMethod<$0.Item_Member, $0.Item_Member>(
+          '/ItemComm/GetItemAmountForMember',
+          ($0.Item_Member value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value));
 
   ItemCommClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -532,6 +537,13 @@ class ItemCommClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Empty> itemMemberEdit($0.Item_Member_Create request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$itemMemberEdit, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Item_Member> getItemAmountForMember(
+      $0.Item_Member request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getItemAmountForMember, request,
+        options: options);
   }
 }
 
@@ -605,6 +617,13 @@ abstract class ItemCommServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.Item_Member_Create.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Item_Member, $0.Item_Member>(
+        'GetItemAmountForMember',
+        getItemAmountForMember_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Item_Member.fromBuffer(value),
+        ($0.Item_Member value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Item> getItem_Pre(
@@ -653,6 +672,11 @@ abstract class ItemCommServiceBase extends $grpc.Service {
     return itemMemberEdit(call, await request);
   }
 
+  $async.Future<$0.Item_Member> getItemAmountForMember_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Item_Member> request) async {
+    return getItemAmountForMember(call, await request);
+  }
+
   $async.Future<$0.Item> getItem($grpc.ServiceCall call, $1.Id request);
   $async.Stream<$0.Item> getItems($grpc.ServiceCall call, $1.Id request);
   $async.Stream<$0.Member_Category_Response> getItemsForMember(
@@ -666,4 +690,6 @@ abstract class ItemCommServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.Item_Member request);
   $async.Future<$1.Empty> itemMemberEdit(
       $grpc.ServiceCall call, $0.Item_Member_Create request);
+  $async.Future<$0.Item_Member> getItemAmountForMember(
+      $grpc.ServiceCall call, $0.Item_Member request);
 }
