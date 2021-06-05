@@ -1,4 +1,5 @@
 import 'package:grpc/grpc.dart';
+import 'package:mutex/mutex.dart';
 import 'package:packliste/src/Websocket.dart';
 import 'package:packliste/src/dbconn.dart';
 import 'package:packliste/src/generated/common.pb.dart';
@@ -9,6 +10,7 @@ import 'package:packliste/src/generated/websocket.pbgrpc.dart';
 class CategoryCommService extends CategoryCommServiceBase {
   final DbConn conn;
   final WebsocketService wSocket;
+  var categoriesInEdit = <int, ReadWriteMutex>{};
 
   CategoryCommService(this.conn, this.wSocket);
 
@@ -24,12 +26,20 @@ class CategoryCommService extends CategoryCommServiceBase {
           status: StatusCode.invalidArgument, message: 'PacklistenId missing');
       return null;
     }
+
     var resultId = (await conn.query(
             'INSERT INTO Category (name,packliste) VALUES (?,?)',
             [request.name, request.pId]))
         .insertId;
-    var category = await conn
-        .query('SELECT id,name,packliste FROM Category WHERE id=?', [resultId]);
+
+    if (!categoriesInEdit.containsKey(resultId)) {
+      categoriesInEdit[resultId] = ReadWriteMutex();
+    }
+    var category =
+        await categoriesInEdit[resultId].protectRead(() => conn.query(
+              'SELECT id,name,packliste FROM Category WHERE id=?',
+              [resultId],
+            ));
     if (category.isEmpty) {
       call.sendTrailers(
           status: StatusCode.aborted, message: 'Could not create Category');
@@ -51,15 +61,19 @@ class CategoryCommService extends CategoryCommServiceBase {
           status: StatusCode.invalidArgument, message: 'Id missing');
       return null;
     }
-    var c = await conn.query(
-        'SELECT id,name,packliste FROM Category where id=?', [request.id]);
+    if (!categoriesInEdit.containsKey(request.id)) {
+      categoriesInEdit[request.id] = ReadWriteMutex();
+    }
+    var c = await categoriesInEdit[request.id].protectRead(() => conn.query(
+        'SELECT id,name,packliste FROM Category where id=?', [request.id]));
     if (c.isEmpty) {
       call.sendTrailers(
           status: StatusCode.notFound,
           message: 'Category with that Id not found');
       return null;
     }
-    await conn.query('DELETE FROM Category WHERE id=?', [request.id]);
+    await categoriesInEdit[request.id].protectWrite(
+        () => conn.query('DELETE FROM Category WHERE id=?', [request.id]));
     wSocket.sendPacket(Packet(type: PacketType.CATEGORY_DELETE, id: request.id),
         packlisteId: c.first[2]);
     return Empty();
@@ -77,16 +91,23 @@ class CategoryCommService extends CategoryCommServiceBase {
           status: StatusCode.invalidArgument, message: 'Name missing');
       return null;
     }
-    var c = await conn.query(
-        'SELECT id, name, packliste FROM Category where id=?', [request.id]);
+    if (!categoriesInEdit.containsKey(request.id)) {
+      categoriesInEdit[request.id] = ReadWriteMutex();
+    }
+    var c = await categoriesInEdit[request.id].protectRead(() => conn.query(
+          'SELECT id, name, packliste FROM Category where id=?',
+          [request.id],
+        ));
     if (c.isEmpty) {
       call.sendTrailers(
           status: StatusCode.invalidArgument,
           message: 'A category with that Id was not found');
       return null;
     }
-    await conn.query(
-        'UPDATE Category SET name=? where id=?', [request.name, request.id]);
+    await categoriesInEdit[request.id].protectWrite(() => conn.query(
+          'UPDATE Category SET name=? where id=?',
+          [request.name, request.id],
+        ));
     wSocket.sendPacket(Packet(type: PacketType.CATEGORY_EDIT, id: request.id),
         packlisteId: c.first[2]);
     return Empty();
@@ -119,8 +140,14 @@ class CategoryCommService extends CategoryCommServiceBase {
           status: StatusCode.invalidArgument, message: 'Id missing');
       return null;
     }
-    var results = await conn.query(
-        'SELECT id, name, packliste FROM Category WHERE id=?', [request.id]);
+    if (!categoriesInEdit.containsKey(request.id)) {
+      categoriesInEdit[request.id] = ReadWriteMutex();
+    }
+    var results =
+        await categoriesInEdit[request.id].protectRead(() => conn.query(
+              'SELECT id, name, packliste FROM Category WHERE id=?',
+              [request.id],
+            ));
     if (results.isEmpty) {
       call.sendTrailers(
           status: StatusCode.notFound,

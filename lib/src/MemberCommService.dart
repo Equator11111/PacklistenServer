@@ -1,4 +1,5 @@
 import 'package:grpc/grpc.dart';
+import 'package:mutex/mutex.dart';
 import 'package:packliste/src/Websocket.dart';
 import 'package:packliste/src/dbconn.dart';
 import 'package:packliste/src/generated/common.pb.dart';
@@ -11,6 +12,8 @@ class MemberCommService extends MemberCommServiceBase {
   final WebsocketService wSocket;
 
   MemberCommService(this.conn, this.wSocket);
+
+  var membersInEdit = <int, ReadWriteMutex>{};
 
   @override
   Future<Member> createMember(ServiceCall call, Member request) async {
@@ -34,8 +37,13 @@ class MemberCommService extends MemberCommServiceBase {
             'INSERT INTO Member (name, packliste, everyone) VALUES (?,?,?)',
             [request.name, request.pId, null]))
         .insertId;
-    var member = await conn.query(
-        'SELECT id,name,packliste,everyone FROM Member WHERE id=?', [resultId]);
+    if (!membersInEdit.containsKey(resultId)) {
+      membersInEdit[resultId] = ReadWriteMutex();
+    }
+    var member = await membersInEdit[resultId].protectRead(() => conn.query(
+          'SELECT id,name,packliste,everyone FROM Member WHERE id=?',
+          [resultId],
+        ));
     if (member.isEmpty) {
       call.sendTrailers(
           status: StatusCode.aborted, message: 'Could not create Member');
@@ -58,9 +66,13 @@ class MemberCommService extends MemberCommServiceBase {
           status: StatusCode.invalidArgument, message: 'Id missing');
       return null;
     }
-    var m = await conn.query(
-        'SELECT id,name,packliste,everyone FROM Member where id=?',
-        [request.id]);
+    if (!membersInEdit.containsKey(request.id)) {
+      membersInEdit[request.id] = ReadWriteMutex();
+    }
+    var m = await membersInEdit[request.id].protectRead(() => conn.query(
+          'SELECT id,name,packliste,everyone FROM Member where id=?',
+          [request.id],
+        ));
     if (m.isEmpty) {
       call.sendTrailers(
           status: StatusCode.notFound,
@@ -73,7 +85,10 @@ class MemberCommService extends MemberCommServiceBase {
           message: 'Cannot delete Everyone-member');
       return null;
     }
-    await conn.query('DELETE FROM Member where id=?', [request.id]);
+    await membersInEdit[request.id].protectWrite(() => conn.query(
+          'DELETE FROM Member where id=?',
+          [request.id],
+        ));
     wSocket.sendPacket(Packet(type: PacketType.MEMBER_DELETE, id: request.id),
         packlisteId: m.first[2]);
     return Empty();
@@ -91,9 +106,13 @@ class MemberCommService extends MemberCommServiceBase {
           status: StatusCode.invalidArgument, message: 'Name missing');
       return null;
     }
-    var m = await conn.query(
-        'SELECT id, name, packliste, everyone FROM Member where id=?',
-        [request.id]);
+    if (!membersInEdit.containsKey(request.id)) {
+      membersInEdit[request.id] = ReadWriteMutex();
+    }
+    var m = await membersInEdit[request.id].protectRead(() => conn.query(
+          'SELECT id, name, packliste, everyone FROM Member where id=?',
+          [request.id],
+        ));
     if (m.isEmpty) {
       call.sendTrailers(
           status: StatusCode.notFound,
@@ -106,8 +125,10 @@ class MemberCommService extends MemberCommServiceBase {
           message: 'Cannot modify Everyone-member');
       return null;
     }
-    await conn.query(
-        'UPDATE Member SET name=? where id=?', [request.name, request.id]);
+    await membersInEdit[request.id].protectWrite(() => conn.query(
+          'UPDATE Member SET name=? where id=?',
+          [request.name, request.id],
+        ));
     wSocket.sendPacket(Packet(type: PacketType.MEMBER_EDIT, id: request.id),
         packlisteId: m.first[2]);
 
@@ -121,9 +142,13 @@ class MemberCommService extends MemberCommServiceBase {
           status: StatusCode.invalidArgument, message: 'Id missing');
       return null;
     }
-    var results = await conn.query(
-        'SELECT id,name,packliste,everyone FROM Member WHERE id=?',
-        [request.id]);
+    if (!membersInEdit.containsKey(request.id)) {
+      membersInEdit[request.id] = ReadWriteMutex();
+    }
+    var results = await membersInEdit[request.id].protectRead(() => conn.query(
+          'SELECT id,name,packliste,everyone FROM Member WHERE id=?',
+          [request.id],
+        ));
     if (results.isEmpty) {
       call.sendTrailers(
           status: StatusCode.notFound,
@@ -136,6 +161,7 @@ class MemberCommService extends MemberCommServiceBase {
   }
 
 //returns members for Packliste
+//TODO implement Mutex
   @override
   Stream<Member> getMembers(ServiceCall call, Id request) async* {
     if (!request.hasId()) {
@@ -157,6 +183,7 @@ class MemberCommService extends MemberCommServiceBase {
     }
   }
 
+//TODO implement Mutex
   @override
   Stream<Item_Member> getMembersForItem(ServiceCall call, Id request) async* {
     if (!request.hasId()) {

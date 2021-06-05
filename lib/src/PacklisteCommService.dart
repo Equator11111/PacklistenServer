@@ -1,3 +1,4 @@
+import 'package:mutex/mutex.dart';
 import 'package:packliste/src/Websocket.dart';
 import 'package:packliste/src/dbconn.dart';
 import 'package:packliste/src/generated/common.pb.dart';
@@ -10,6 +11,7 @@ class PacklisteCommService extends PacklisteCommServiceBase {
   final WebsocketService wSocket;
 
   PacklisteCommService(this.conn, this.wSocket);
+  var packlisteInEdit = <int, ReadWriteMutex>{};
 
   @override
   Future<Packliste> createPackliste(
@@ -22,11 +24,16 @@ class PacklisteCommService extends PacklisteCommServiceBase {
     var resultId = (await conn
             .query('INSERT INTO Packliste (name) VALUES (?)', [request.name]))
         .insertId;
+    if (!packlisteInEdit.containsKey(resultId)) {
+      packlisteInEdit[resultId] = ReadWriteMutex();
+    }
     await conn.query(
         'INSERT INTO Member (name, packliste, everyone) VALUES (?,?,?)',
         ['Everyone', resultId, 1]);
-    var results = await conn
-        .query('select id,name from Packliste where id=?', [resultId]);
+    var results = await packlisteInEdit[resultId].protectRead(() => conn.query(
+          'SELECT id,name FROM Packliste WHERE id=?',
+          [resultId],
+        ));
     wSocket.sendPacket(Packet(type: PacketType.PACKLISTE_CREATE, id: resultId));
     return Packliste(id: results.first[0], name: results.first[1]);
   }
@@ -38,8 +45,14 @@ class PacklisteCommService extends PacklisteCommServiceBase {
           status: grpc.StatusCode.invalidArgument, message: 'Id missing');
       return null;
     }
+    if (!packlisteInEdit.containsKey(request.id)) {
+      packlisteInEdit[request.id] = ReadWriteMutex();
+    }
     var results =
-        await conn.query('DELETE FROM Packliste where id=?', [request.id]);
+        await packlisteInEdit[request.id].protectWrite(() => conn.query(
+              'DELETE FROM Packliste where id=?',
+              [request.id],
+            ));
     if (results.affectedRows == 0) {
       call.sendTrailers(
           status: grpc.StatusCode.notFound,
@@ -64,8 +77,14 @@ class PacklisteCommService extends PacklisteCommServiceBase {
           status: grpc.StatusCode.invalidArgument, message: 'Name missing');
       return null;
     }
-    var results = await conn.query(
-        'UPDATE Packliste SET name =? where id=?', [request.name, request.id]);
+    if (!packlisteInEdit.containsKey(request.id)) {
+      packlisteInEdit[request.id] = ReadWriteMutex();
+    }
+    var results =
+        await packlisteInEdit[request.id].protectWrite(() => conn.query(
+              'UPDATE Packliste SET name =? where id=?',
+              [request.name, request.id],
+            ));
     if (results.affectedRows == 0) {
       call.sendTrailers(
           status: grpc.StatusCode.notFound,
@@ -83,8 +102,14 @@ class PacklisteCommService extends PacklisteCommServiceBase {
       call.sendTrailers(
           status: grpc.StatusCode.invalidArgument, message: 'Id missing');
     }
-    var results = await conn
-        .query('select id,name from Packliste where id=?', [request.id]);
+    if (!packlisteInEdit.containsKey(request.id)) {
+      packlisteInEdit[request.id] = ReadWriteMutex();
+    }
+    var results =
+        await packlisteInEdit[request.id].protectRead(() => conn.query(
+              'SELECT id,name FROM Packliste WHERE id=?',
+              [request.id],
+            ));
     if (results.isEmpty) {
       call.sendTrailers(
           status: grpc.StatusCode.notFound,
@@ -95,9 +120,10 @@ class PacklisteCommService extends PacklisteCommServiceBase {
     return result;
   }
 
+  //TODO implement Mutex
   @override
   Stream<Packliste> getPacklisten(grpc.ServiceCall call, Empty request) async* {
-    var results = await conn.query('select id,name from Packliste');
+    var results = await conn.query('SELECT id,name from Packliste');
     for (var r in results) {
       var p = Packliste()
         ..id = r[0]
